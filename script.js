@@ -14,14 +14,25 @@ const instrumentsArr = [
 const selectContainer = document.querySelector("select");
 const productsContainer = document.querySelector(".products-container");
 function instrumentCards(instrumentCategory) {
-  
-  if (instrumentCategory === "all") {
-   return instrumentsArr;
-  }
-  return instrumentsArr.filter(item => item.category === instrumentCategory);
-  
-}
+  const instruments =
+    instrumentCategory === "all"
+      ? instrumentsArr
+      : instrumentsArr.filter(
+          ({ category }) => category === instrumentCategory
+        );
 
+  return instruments
+    .map(({ instrument, price }) => {
+      return `
+          <div class="card">
+            <h2>${instrument}</h2>
+            <p>$${price}</p>
+          </div>
+        `;
+      
+    }).join('')
+    
+}
 selectContainer.addEventListener("change", () => {
-  console.log(instrumentCards(selectContainer.value));
+  productsContainer.innerHTML = instrumentCards(selectContainer.value);
 });
